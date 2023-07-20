@@ -18,10 +18,8 @@ Before using jprq-runner, make sure you have the following installed on your com
 3. Clone the jprq-runner project from GitHub:
 
    ```
-   git clone https://github.com/username/jprq-runner.git
+   git clone https://github.com/RJavaDev/jprq-runner.git
    ```
-
-   Replace `username` with your GitHub username.
 
 4. Navigate to the project folder:
 
@@ -61,7 +59,7 @@ Note: Once you have entered your authentication token, you don't need to re-ente
 
 If you have any questions or need further assistance, feel free to contact me through Telegram, Email, or Phone:
 
-- Telegram: @Ravahanbek_98
+- Telegram: [@Ravahanbek_98](https://t.me/Ravahanbek_98)
 - Email: ravshanbek9918@gmail.com
 - Phone: +998901389918
 
