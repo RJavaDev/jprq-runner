@@ -1,6 +1,6 @@
 # jprq-runner
 
-jprq-runner is a Java project that allows you to expose your locally hosted service to the internet, making it accessible globally. It utilizes the jprq.io service to achieve this functionality.
+jprq-runner is a Java project that serves as a client for jprq.exe, a tool developed by Azimjon Pulatov to simplify the process of running jprq on your computer. With jprq-runner, you can easily expose your locally hosted service to the internet, allowing others to access it globally.
 
 ## Prerequisites
 
@@ -11,15 +11,11 @@ Before using jprq-runner, make sure you have the following installed on your com
 
 ## Getting Started
 
-1. Visit the jprq.io website and obtain your authentication token by running the following command:
+1. Visit the [jprq.io](https://jprq.io) website to learn more about the service and how it works.
 
-   ```
-   $ jprq auth <your-auth-token>
-   ```
+2. Obtain the jprq.exe tool developed by [Azimjon Pulatov](https://azimjon.com/) from his [GitHub repository](https://github.com/azimjohn/jprq). This tool will be used by jprq-runner to expose your local service to the internet.
 
-   Replace `<your-auth-token>` with the token you receive from the jprq.io website.
-
-2. Clone the jprq-runner project from GitHub:
+3. Clone the jprq-runner project from GitHub:
 
    ```
    git clone https://github.com/username/jprq-runner.git
@@ -27,13 +23,13 @@ Before using jprq-runner, make sure you have the following installed on your com
 
    Replace `username` with your GitHub username.
 
-3. Navigate to the project folder:
+4. Navigate to the project folder:
 
    ```
    cd jprq-runner
    ```
 
-4. Build the project using Maven:
+5. Build the project using Maven:
 
    ```
    mvn clean package
@@ -41,13 +37,23 @@ Before using jprq-runner, make sure you have the following installed on your com
 
 ## Running the Application
 
-To run the application and open a port for others to access, use the command:
+To run the jprq-runner application and open a port for others to access, follow these steps:
 
-```
-java -jar target/jprq-runner-1.0-SNAPSHOT.jar
-```
+1. Obtain your authentication token from the [jprq.io](https://jprq.io) website by running the following command:
 
-Make sure to choose a port number that is not in use. For example, you can use port 8080. The application will now expose your local service to the internet, making it globally accessible.
+   ```
+   $ jprq auth <your-auth-token>
+   ```
+
+   Replace `<your-auth-token>` with the token you receive from the website.
+
+2. Execute the jprq.exe tool:
+
+   ```
+   java -jar target/jprq-runner-1.0-SNAPSHOT.jar
+   ```
+
+   Make sure to choose a port number that is not in use. For example, you can use port 8080. The application will now expose your local service to the internet, making it globally accessible.
 
 Note: Once you have entered your authentication token, you don't need to re-enter it every time you run the application. Simply execute the `java -jar` command again to start the service.
 
