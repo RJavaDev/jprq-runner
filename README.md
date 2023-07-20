@@ -1,6 +1,6 @@
 # jprq-runner
 
-jprq-runner is a Java project that serves as a client for jprq.exe, a tool developed by Azimjon Pulatov to simplify the process of running jprq on your computer. With jprq-runner, you can easily expose your locally hosted service to the internet, allowing others to access it globally.
+jprq-runner is a Java project that allows you to make your local computer's port globally accessible and visible to others. This is achieved by using the token provided by the jprq.io website. The project is base by Azimjon Pulatov's jprq, which simplifies the process of running jprq on your computer. With jprq-runner, you can easily expose your locally hosted service to the internet, allowing others to access it globally.
 
 ## Prerequisites
 
