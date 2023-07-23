@@ -1,18 +1,19 @@
 package org.example.util;
 
-import org.example.ThreadImp;
+import org.example.threadImp.ThreadImp;
 import org.example.controller.CMDController;
 import org.example.model.TokenAndPortModel;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class WriteCommandCMDUtils {
 
-    private static final String SUCCESS = "" +
+    private static final String SUCCESS = "<b style=\"color: red;\">" +
             "You have opened a port through server jprq,\n" +
-            "now click OK to close this port.\n" +
+            "now click OK to close this port.<br>\n" +
             "If you don't want to close the port\n" +
-            "just do other things";
+            "just do other things </b>";
 
     public static void writeCommand(TokenAndPortModel auth) {
 
@@ -24,7 +25,6 @@ public class WriteCommandCMDUtils {
     }
 
     private static void startCommond(String[] command1, String[] command2) {
-
         try {
             ProcessBuilder processBuilder1 = new ProcessBuilder(command1);
             processBuilder1.directory(new File("src/main/resources/jprq"));
@@ -54,21 +54,31 @@ public class WriteCommandCMDUtils {
 
         String information = "";
         String line;
+        String openPortLink = null;
         int s = 0;
         while ((line = inputReader.readLine()) != null) {
             s++;
             System.out.println(line);
-            information += line + "\n";
+            information += line + "<br>";
+            if(line.contains("Forwarded")){
+                String[] searchLink = line.split(":");
+                openPortLink = searchLink[1].replaceAll("\\s", "");
+            }
             if(s==5){
-                information+="\n"+SUCCESS;
-               ThreadImp.killRun(information);
+                information+="<br>"+SUCCESS;
+               ThreadImp.killRun(information, openPortLink);
             }
         }
 
         while ((line = errorReader.readLine()) != null) {
             System.out.println(line);
             information += line + "\n";
-            if(line.contains("authentication failed")){
+            if(line.contains("auth token has been set")){
+                continue;
+            }
+
+            if(line.contains("authentication failed")||line.contains("cannot reach server on port")){
+                ButtonUtils.error(information);
                 CMDController.newAuth(false);
             }
             ButtonUtils.error(information);

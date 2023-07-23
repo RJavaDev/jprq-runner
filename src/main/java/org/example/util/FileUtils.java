@@ -1,44 +1,26 @@
 package org.example.util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.model.TokenAndPortModel;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 
 public class FileUtils {
 
+    private static final String FILE_PATH = "src/main/resources/auth/auth.txt";
 
-    public static TokenAndPortModel readFile() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("src/main/resources/auth", "auth.txt");
+    private static final String DELIMITER = ",";
 
-        try {
-            if (file.exists()) {
-                return objectMapper.readValue(file, TokenAndPortModel.class);
-            } else {
-                System.out.println("JSON file does not exist.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        return null;
-    }
+    public static void writeToFile(boolean isNew, TokenAndPortModel model) {
 
-    public static void writeAuth(boolean isNew, TokenAndPortModel auth){
-        try {
+        createdFile();
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+            writer.println(model.getToken() + DELIMITER + model.getPort());
 
-            File file = new File("src/main/resources/auth");
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            File txtFileOpen = createdFile(file);
-            objectMapper.writeValue(txtFileOpen, auth);
-
-            if(!isNew){
+            if (!isNew) {
                 ButtonUtils.information("Update data successfully");
-            }else{
+            } else {
                 ButtonUtils.information("data entered successfully");
             }
 
@@ -46,9 +28,37 @@ public class FileUtils {
             ButtonUtils.error(e.getMessage());
             e.printStackTrace();
         }
+
+
     }
 
-    private static File createdFile(File file){
+    public static TokenAndPortModel readFromFile() {
+
+        File txtFileOpen = new File("src/main/resources/auth", "auth.txt");
+        if (txtFileOpen.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+                String line = reader.readLine();
+                if (line != null) {
+                    String[] parts = line.split(DELIMITER);
+                    if (parts.length == 2) {
+                        TokenAndPortModel model = new TokenAndPortModel();
+                        model.setToken(parts[0]);
+                        model.setPort(parts[1]);
+                        return model;
+                    }
+                }
+            } catch (IOException e) {
+                ButtonUtils.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    private static void createdFile(){
+
+        File file = new File("src/main/resources/auth");
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -57,11 +67,9 @@ public class FileUtils {
             try {
                 txtFileOpen.createNewFile();
             } catch (IOException e) {
-                ButtonUtils.error(e.getMessage());
                 throw new RuntimeException(e);
             }
         }
-        return txtFileOpen;
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class CMDController {
 
-    private static final TokenAndPortModel authToken = FileUtils.readFile();
+    private static final TokenAndPortModel authToken = FileUtils.readFromFile();
 
     public static void runCommand() {
 
@@ -23,7 +23,6 @@ public class CMDController {
                 WriteCommandCMDUtils.writeCommand(authToken);
             } else if (updateOrRun == 0) {
                 newAuth(false);
-                WriteCommandCMDUtils.writeCommand(authToken);
             } else {
                 System.exit(0);
             }
@@ -48,9 +47,10 @@ public class CMDController {
 
         if (isNew) {
             if (Validate.validateTokenAndPort(auth, true)) {
-                FileUtils.writeAuth(true, auth);
 
-                WriteCommandCMDUtils.writeCommand(Objects.requireNonNull(FileUtils.readFile()));
+                FileUtils.writeToFile(true, auth);
+                WriteCommandCMDUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+
             } else {
 
                 if (ButtonUtils.isExit() == 0) {
@@ -58,12 +58,16 @@ public class CMDController {
                 } else {
                     CMDController.newAuth(true);
                 }
+
             }
 
         } else {
 
-            TokenAndPortModel updateTokenAndPortModel = Validate.validateUpdateTokenAndPort(authToken, auth);
-            FileUtils.writeAuth(false, updateTokenAndPortModel);
+            TokenAndPortModel updateTokenAndPortModel = Validate.validateUpdateTokenAndPort(FileUtils.readFromFile(), auth);
+            if(updateTokenAndPortModel != null){
+                FileUtils.writeToFile(false, updateTokenAndPortModel);
+                WriteCommandCMDUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+            }
 
         }
 

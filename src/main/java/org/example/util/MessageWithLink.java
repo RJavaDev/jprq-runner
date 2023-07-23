@@ -14,17 +14,31 @@ public class MessageWithLink extends JEditorPane {
 
     private static final long serialVersionUID = 1L;
 
-    public static void openLink(){
+    public static void openLink() {
         JOptionPane.showMessageDialog(
                 null,
                 new MessageWithLink("You must have received an " +
-                "\n auth token from <a href=\"https://jprq.io/auth\">auth</a>")
+                        "<br> auth token from <a href=\"https://jprq.io/auth\">jprq.io</a>")
 
         );
     }
 
+    public static int okLink(String link, String linkName, String message) {
+        String[] response = {"OK"};
+
+        return JOptionPane.showOptionDialog(
+                null,
+                new MessageWithLink(messageAddUrlLink(link, linkName, message)),
+                "Info",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                response,
+                0);
+    }
+
     public MessageWithLink(String htmlBody) {
-        super("text/html", "<html><body style=\"" + getStyle() + "\">" + htmlBody + "</body></html>");
+        super("text/html", htmlBuild(htmlBody));
         addHyperlinkListener(e -> {
             if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
                 try {
@@ -49,7 +63,29 @@ public class MessageWithLink extends JEditorPane {
         StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
         style.append("font-weight:" + (font.isBold() ? "bold" : "normal") + ";");
         style.append("font-size:" + font.getSize() + "pt;");
-        style.append("background-color: rgb("+color.getRed()+","+color.getGreen()+","+color.getBlue()+");");
+        style.append("background-color: rgb(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ");");
         return style;
+    }
+
+    private static String messageAddUrlLink(String link, String linkName, String message){
+        return message.replace(linkName, "<a href=" + link + ">" + linkName + "</a>");
+    }
+
+    private static String htmlBuild(String title){
+
+        return
+                "<html>"+
+                "</head>\n" +
+                "<body style=\""+ getStyle() +"\">" +
+                "    <p style=\"width: 400px;" +
+                        " background-color: transparent; " +
+                        "padding: 10px; font-size: 17px; " +
+                        "font-family: sans-serif;\" " +
+                        "color: #00ad00" +
+                        ">\n" +
+                title+
+                "    </p>\n" +
+                "</body>\n" +
+                "</html>";
     }
 }

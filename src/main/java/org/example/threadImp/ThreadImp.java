@@ -1,6 +1,7 @@
-package org.example;
+package org.example.threadImp;
 
 import org.example.util.ButtonUtils;
+import org.example.util.MessageWithLink;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -53,8 +54,8 @@ public class ThreadImp extends Thread {
         return false;
     }
 
-    public static void killRun(String information) {
-        int ok = ButtonUtils.ok(information);
+    public static void killRun(String information, String openPortLink) {
+        int ok = MessageWithLink.okLink("https://" + openPortLink, openPortLink, information);
         if (ok == 0) {
             ThreadImp killThreadImp = new ThreadImp();
 
@@ -68,7 +69,7 @@ public class ThreadImp extends Thread {
 
             ButtonUtils.information("is success ");
         } else {
-            killRun(information);
+            killRun(information, openPortLink);
         }
     }
 }
