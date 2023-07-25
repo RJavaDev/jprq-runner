@@ -16,10 +16,12 @@ public class Main {
             serverSocket = new ServerSocket(port);
             Socket socket;
             System.out.println("Server started on port " + port);
+
             CMDController.runCommand();
-            System.exit(0);
+
             socket = serverSocket.accept();
             socket.close();
+            System.exit(0);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
