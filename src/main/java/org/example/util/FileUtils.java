@@ -7,7 +7,7 @@ import java.io.*;
 
 public class FileUtils {
 
-    private static final String FILE_PATH = "src/main/resources/auth/auth.txt";
+    private static final String FILE_PATH = "file/auth/auth.txt";
 
     private static final String DELIMITER = ",";
 
@@ -34,7 +34,7 @@ public class FileUtils {
 
     public static TokenAndPortModel readFromFile() {
 
-        File txtFileOpen = new File("src/main/resources/auth", "auth.txt");
+        File txtFileOpen = new File("file/auth", "auth.txt");
         if (txtFileOpen.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
                 String line = reader.readLine();
@@ -58,11 +58,11 @@ public class FileUtils {
 
     private static void createdFile(){
 
-        File file = new File("src/main/resources/auth");
+        File file = new File("file/auth");
         if (!file.exists()) {
             file.mkdirs();
         }
-        File txtFileOpen = new File("src/main/resources/auth", "auth.txt");
+        File txtFileOpen = new File("file/auth", "auth.txt");
         if (!txtFileOpen.exists()) {
             try {
                 txtFileOpen.createNewFile();

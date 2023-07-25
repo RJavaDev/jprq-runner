@@ -35,7 +35,7 @@ public class ThreadImp extends Thread {
     }
 
     public static void killProcess(String serviceName) throws Exception {
-        Runtime.getRuntime().exec("src/main/resources/killFile/Elevate64.exe TASKKILL /F /IM " + serviceName);
+        Runtime.getRuntime().exec("file/killFile/Elevate64.exe TASKKILL /F /IM " + serviceName);
     }
 
 

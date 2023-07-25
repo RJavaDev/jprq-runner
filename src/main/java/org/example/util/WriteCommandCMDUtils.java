@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 public class WriteCommandCMDUtils {
 
+    private static final String COMMOND_WRITE_PATH = "file/jprq";
+
     private static final String SUCCESS = "<b style=\"color: red;\">" +
             "You have opened a port through server jprq,\n" +
             "now click OK to close this port.<br>\n" +
@@ -20,20 +22,20 @@ public class WriteCommandCMDUtils {
         String[] command1 = {"cmd", "/c", ".\\jprq-windows-386.exe", "auth", auth.getToken()};
         String[] command2 = {"cmd", "/c", ".\\jprq-windows-386.exe", "http", auth.getPort()};
 
-            startCommond(command1, command2);
+        startCommond(command1, command2);
 
     }
 
     private static void startCommond(String[] command1, String[] command2) {
         try {
             ProcessBuilder processBuilder1 = new ProcessBuilder(command1);
-            processBuilder1.directory(new File("src/main/resources/jprq"));
+            processBuilder1.directory(new File(COMMOND_WRITE_PATH));
             Process process1 = processBuilder1.start();
             writeInformation(process1);
             process1.waitFor();
 
             ProcessBuilder processBuilder2 = new ProcessBuilder(command2);
-            processBuilder2.directory(new File("src/main/resources/jprq"));
+            processBuilder2.directory(new File(COMMOND_WRITE_PATH));
             Process process2 = processBuilder2.start();
             writeInformation(process2);
             process2.waitFor();
@@ -60,24 +62,24 @@ public class WriteCommandCMDUtils {
             s++;
             System.out.println(line);
             information += line + "<br>";
-            if(line.contains("Forwarded")){
+            if (line.contains("Forwarded")) {
                 String[] searchLink = line.split(":");
                 openPortLink = searchLink[1].replaceAll("\\s", "");
             }
-            if(s==5){
-                information+="<br>"+SUCCESS;
-               ThreadImp.killRun(information, openPortLink);
+            if (s == 5) {
+                information += "<br>" + SUCCESS;
+                ThreadImp.killRun(information, openPortLink);
             }
         }
 
         while ((line = errorReader.readLine()) != null) {
             System.out.println(line);
             information += line + "\n";
-            if(line.contains("auth token has been set")){
+            if (line.contains("auth token has been set")) {
                 continue;
             }
 
-            if(line.contains("authentication failed")||line.contains("cannot reach server on port")){
+            if (line.contains("authentication failed") || line.contains("cannot reach server on port")) {
                 ButtonUtils.error(information);
                 CMDController.newAuth(false);
             }
