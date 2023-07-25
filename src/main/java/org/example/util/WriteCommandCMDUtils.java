@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class WriteCommandCMDUtils {
 
-    private static final String COMMOND_WRITE_PATH = "file/jprq";
+    private static final String COMMOND_WRITE_PATH = "files/jprq";
 
     private static final String SUCCESS = "<b style=\"color: red;\">" +
             "You have opened a port through server jprq,\n" +
