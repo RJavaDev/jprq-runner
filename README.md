@@ -50,7 +50,7 @@ To run the jprq-runner application and open a port for others to access, follow 
    ```
    java -jar target/jprq-runner-1.0-SNAPSHOT.jar
    ```
-
+After creating a jar file, you need to use it by adding the files folder next to it, because the necessary files for the jprq-runner project are in this case.
    Make sure to choose a port number that is not in use. For example, you can use port 8080. The application will now expose your local service to the internet, making it globally accessible.
 
 Note: Once you have entered your authentication token, you don't need to re-enter it every time you run the application. Simply execute the `java -jar` command again to start the service.
