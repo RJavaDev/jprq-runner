@@ -5,9 +5,8 @@ import org.example.controller.CMDController;
 import org.example.model.TokenAndPortModel;
 
 import java.io.*;
-import java.util.Arrays;
 
-public class WriteCommandCMDUtils {
+public class WriteCommandWindowsUtils {
 
     private static final String COMMOND_WRITE_PATH = "files/jprq";
 

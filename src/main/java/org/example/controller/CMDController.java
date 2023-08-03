@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.model.TokenAndPortModel;
-import org.example.util.ButtonUtils;
-import org.example.util.FileUtils;
-import org.example.util.MessageWithLink;
-import org.example.util.WriteCommandCMDUtils;
+import org.example.util.*;
 import org.example.validate.Validate;
 
 import java.util.Hashtable;
@@ -14,13 +11,18 @@ public class CMDController {
 
     private static final TokenAndPortModel authToken = FileUtils.readFromFile();
 
+    private static final SystemName systemName = new SystemName();
+
     public static void runCommand() {
 
 
         if (Objects.nonNull(authToken)) {
             int updateOrRun = ButtonUtils.updateOrRun();
             if (updateOrRun == 1) {
-                WriteCommandCMDUtils.writeCommand(authToken);
+
+                ButtonUtils.information(systemName.getName());
+                WriteCommandLinuxUtils.writeCommand(authToken);
+//                WriteCommandWindowsUtils.writeCommand(authToken);
             } else if (updateOrRun == 0) {
                 newAuth(false);
             } else {
@@ -49,7 +51,8 @@ public class CMDController {
             if (Validate.validateTokenAndPort(auth, true)) {
 
                 FileUtils.writeToFile(true, auth);
-                WriteCommandCMDUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+                WriteCommandLinuxUtils.writeCommand(FileUtils.readFromFile());
+//                WriteCommandWindowsUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
 
             } else {
 
@@ -66,7 +69,8 @@ public class CMDController {
             TokenAndPortModel updateTokenAndPortModel = Validate.validateUpdateTokenAndPort(FileUtils.readFromFile(), auth);
             if(updateTokenAndPortModel != null){
                 FileUtils.writeToFile(false, updateTokenAndPortModel);
-                WriteCommandCMDUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+                WriteCommandLinuxUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+//                WriteCommandWindowsUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
             }
 
         }
