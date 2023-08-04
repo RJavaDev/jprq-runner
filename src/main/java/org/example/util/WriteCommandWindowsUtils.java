@@ -8,7 +8,7 @@ import java.io.*;
 
 public class WriteCommandWindowsUtils {
 
-    private static final String COMMOND_WRITE_PATH = "files/jprq";
+    private static final String COMMAND_WRITE_PATH = "files/jprq";
 
     private static final String SUCCESS = "<b style=\"color: red;\">" +
             "You have opened a port through server jprq,\n" +
@@ -28,13 +28,13 @@ public class WriteCommandWindowsUtils {
     private static void startCommond(String[] command1, String[] command2) {
         try {
             ProcessBuilder processBuilder1 = new ProcessBuilder(command1);
-            processBuilder1.directory(new File(COMMOND_WRITE_PATH));
+            processBuilder1.directory(new File(COMMAND_WRITE_PATH));
             Process process1 = processBuilder1.start();
             writeInformation(process1);
             process1.waitFor();
 
             ProcessBuilder processBuilder2 = new ProcessBuilder(command2);
-            processBuilder2.directory(new File(COMMOND_WRITE_PATH));
+            processBuilder2.directory(new File(COMMAND_WRITE_PATH));
             Process process2 = processBuilder2.start();
             writeInformation(process2);
             process2.waitFor();

@@ -2,14 +2,18 @@ package org.example.threadImp;
 
 import org.example.util.ButtonUtils;
 import org.example.util.MessageWithLink;
+import org.example.util.SystemName;
 
 import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ThreadImp extends Thread {
 
     private static final String TASKLIST = "tasklist";
+
+    private static final SystemName system = new SystemName();
 
     @Override
     public void run() {
@@ -57,19 +61,55 @@ public class ThreadImp extends Thread {
     public static void killRun(String information, String openPortLink) {
         int ok = MessageWithLink.okLink("https://" + openPortLink, openPortLink, information);
         if (ok == 0) {
-            ThreadImp killThreadImp = new ThreadImp();
+            if(system.isLinux()){
+                linuxProcessKiller();
+            }else {
+                ThreadImp killThreadImp = new ThreadImp();
 
-            killThreadImp.start();
-            try {
-                killThreadImp.join();
-            } catch (InterruptedException e) {
-                ButtonUtils.error(e.getMessage());
-                throw new RuntimeException(e);
+                killThreadImp.start();
+                try {
+                    killThreadImp.join();
+                } catch (InterruptedException e) {
+                    ButtonUtils.error(e.getMessage());
+                    throw new RuntimeException(e);
+                }
+
+                ButtonUtils.information("is success ");
             }
 
-            ButtonUtils.information("is success ");
         } else {
             killRun(information, openPortLink);
         }
     }
+
+    public static void linuxProcessKiller() {
+
+        String processName = "jprq"; // O'chirishni istagan protsess nomi
+
+        try {
+            Process p = Runtime.getRuntime().exec("pgrep " + processName);
+            p.waitFor();
+
+            if (p.exitValue() == 0) {
+                // Process topildi, o'chirish amalga oshiriladi
+                Process killProcess = Runtime.getRuntime().exec("pkill " + processName);
+                killProcess.waitFor();
+
+                if (killProcess.exitValue() == 0) {
+                    System.out.println("Protsess muvaffaqiyatli o'chirildi.");
+                } else {
+                    System.out.println("Protsess o'chirilmadi.");
+                }
+                System.exit(0);
+            } else {
+                System.out.println("Protsess topilmadi.");
+            }
+        } catch (IOException | InterruptedException e) {
+
+            ButtonUtils.error(e.getMessage());
+            System.exit(0);
+            e.printStackTrace();
+        }
+    }
+
 }

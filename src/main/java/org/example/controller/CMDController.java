@@ -20,7 +20,7 @@ public class CMDController {
             int updateOrRun = ButtonUtils.updateOrRun();
             if (updateOrRun == 1) {
 
-                ButtonUtils.information(systemName.getName());
+                ButtonUtils.information("the program started working on the " +systemName.getName()+ " system");
                 WriteCommandLinuxUtils.writeCommand(authToken);
 //                WriteCommandWindowsUtils.writeCommand(authToken);
             } else if (updateOrRun == 0) {
@@ -51,7 +51,7 @@ public class CMDController {
             if (Validate.validateTokenAndPort(auth, true)) {
 
                 FileUtils.writeToFile(true, auth);
-                WriteCommandLinuxUtils.writeCommand(FileUtils.readFromFile());
+                WriteCommandLinuxUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
 //                WriteCommandWindowsUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
 
             } else {
