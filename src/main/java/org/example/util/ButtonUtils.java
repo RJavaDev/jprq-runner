@@ -20,7 +20,7 @@ public class ButtonUtils {
                 0);
     }
 
-    public static int ok(String message){
+    public static int ok(String message) {
         String[] response = {"OK"};
 
         return JOptionPane.showOptionDialog(
@@ -34,11 +34,11 @@ public class ButtonUtils {
                 0);
     }
 
-    public static void error(String information){
+    public static void error(String information) {
         JOptionPane.showMessageDialog(null, information, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static int updateOrRun(){
+    public static int updateOrRun() {
         String[] response = {"update data", "Run"};
 
         return JOptionPane.showOptionDialog(
@@ -79,7 +79,7 @@ public class ButtonUtils {
         return information;
     }
 
-    public static void information(String message){
+    public static void information(String message) {
         JOptionPane.showMessageDialog(null, message, "INFO", JOptionPane.INFORMATION_MESSAGE);
     }
 

@@ -10,15 +10,15 @@ public class SystemName {
         return name;
     }
 
-    public boolean isWindows(){
-        return name.equals(SystemsName.WINDOWS);
+    public boolean isWindows() {
+        return name.contains(SystemsName.WINDOWS);
     }
 
-    public boolean isLinux(){
-        return name.equals(SystemsName.LINUX);
+    public boolean isLinux() {
+        return name.contains(SystemsName.LINUX);
     }
 
-    public boolean isMac(){
-        return name.equals(SystemsName.MOC);
+    public boolean isMac() {
+        return name.contains(SystemsName.MOC);
     }
 }

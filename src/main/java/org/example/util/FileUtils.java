@@ -56,7 +56,7 @@ public class FileUtils {
         return null;
     }
 
-    private static void createdFile(){
+    private static void createdFile() {
 
         File file = new File("files/auth");
         if (!file.exists()) {

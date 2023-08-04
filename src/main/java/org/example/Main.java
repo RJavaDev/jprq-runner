@@ -1,7 +1,6 @@
 package org.example;
 
-import org.example.controller.CMDController;
-import org.example.util.SystemName;
+import org.example.controller.AppController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,7 +17,7 @@ public class Main {
             Socket socket;
             System.out.println("Server started on port " + port);
 
-            CMDController.runCommand();
+            AppController.runCommand();
 
             socket = serverSocket.accept();
             socket.close();

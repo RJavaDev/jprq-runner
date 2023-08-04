@@ -67,25 +67,25 @@ public class MessageWithLink extends JEditorPane {
         return style;
     }
 
-    private static String messageAddUrlLink(String link, String linkName, String message){
+    private static String messageAddUrlLink(String link, String linkName, String message) {
         return message.replace(linkName, "<a href=" + link + ">" + linkName + "</a>");
     }
 
-    private static String htmlBuild(String title){
+    private static String htmlBuild(String title) {
 
         return
-                "<html>"+
-                "</head>\n" +
-                "<body style=\""+ getStyle() +"\">" +
-                "    <p style=\"width: 400px;" +
+                "<html>" +
+                        "</head>\n" +
+                        "<body style=\"" + getStyle() + "\">" +
+                        "    <p style=\"width: 400px;" +
                         " background-color: transparent; " +
                         "padding: 10px; font-size: 17px; " +
                         "font-family: sans-serif;\" " +
                         "color: #00ad00" +
                         ">\n" +
-                title+
-                "    </p>\n" +
-                "</body>\n" +
-                "</html>";
+                        title +
+                        "    </p>\n" +
+                        "</body>\n" +
+                        "</html>";
     }
 }

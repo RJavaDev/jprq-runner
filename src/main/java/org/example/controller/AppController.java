@@ -2,12 +2,13 @@ package org.example.controller;
 
 import org.example.model.TokenAndPortModel;
 import org.example.util.*;
+import org.example.validate.InstallJprqSystem;
 import org.example.validate.Validate;
 
 import java.util.Hashtable;
 import java.util.Objects;
 
-public class CMDController {
+public class AppController {
 
     private static final TokenAndPortModel authToken = FileUtils.readFromFile();
 
@@ -20,9 +21,8 @@ public class CMDController {
             int updateOrRun = ButtonUtils.updateOrRun();
             if (updateOrRun == 1) {
 
-                ButtonUtils.information("the program started working on the " +systemName.getName()+ " system");
-                WriteCommandLinuxUtils.writeCommand(authToken);
-//                WriteCommandWindowsUtils.writeCommand(authToken);
+                ButtonUtils.information("the program started working on the " + systemName.getName() + " system");
+                orientationSystem(false);
             } else if (updateOrRun == 0) {
                 newAuth(false);
             } else {
@@ -48,33 +48,41 @@ public class CMDController {
     public static void authManagement(TokenAndPortModel auth, boolean isNew) {
 
         if (isNew) {
+
             if (Validate.validateTokenAndPort(auth, true)) {
-
                 FileUtils.writeToFile(true, auth);
-                WriteCommandLinuxUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
-//                WriteCommandWindowsUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
-
+                orientationSystem(true);
             } else {
 
                 if (ButtonUtils.isExit() == 0) {
                     System.exit(0);
                 } else {
-                    CMDController.newAuth(true);
+                    AppController.newAuth(true);
                 }
-
             }
 
         } else {
 
             TokenAndPortModel updateTokenAndPortModel = Validate.validateUpdateTokenAndPort(FileUtils.readFromFile(), auth);
-            if(updateTokenAndPortModel != null){
+            if (updateTokenAndPortModel != null) {
                 FileUtils.writeToFile(false, updateTokenAndPortModel);
-                WriteCommandLinuxUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
-//                WriteCommandWindowsUtils.writeCommand(Objects.requireNonNull(FileUtils.readFromFile()));
+                orientationSystem(false);
             }
 
         }
 
+    }
+
+    public static void orientationSystem(boolean isNew) {
+        TokenAndPortModel tokenAndPort = Objects.requireNonNull(FileUtils.readFromFile());
+        if (systemName.isWindows()) {
+            WriteCommandWindowsUtils.writeCommand(tokenAndPort);
+        } else if (systemName.isLinux()) {
+            if (isNew) {
+                InstallJprqSystem.jprqInstalled();
+            }
+            WriteCommandLinuxUtils.writeCommand(tokenAndPort);
+        }
     }
 
 }
