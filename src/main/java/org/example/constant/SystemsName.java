@@ -6,5 +6,5 @@ public interface SystemsName {
 
     String LINUX = "Linux";
 
-    String MOC = "Mac";
+    String MAC = "Mac";
 }

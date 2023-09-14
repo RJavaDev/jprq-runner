@@ -19,6 +19,6 @@ public class SystemName {
     }
 
     public boolean isMac() {
-        return name.contains(SystemsName.MOC);
+        return name.contains(SystemsName.MAC);
     }
 }
